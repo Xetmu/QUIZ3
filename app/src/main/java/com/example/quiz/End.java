@@ -42,7 +42,7 @@ public class End extends AppCompatActivity implements View.OnClickListener{
         int total = 0;
         Index =  QuestionAnswer.index;
 
-        for (int i = 0 + Index; i < QuestionAnswer.index; i++) {
+        for (int i = 0; i < QuestionAnswer.index; i++) {
             if (QuestionAnswer.numbers[i + Index] == QuestionAnswer.extraNumbers[i + Index]) {
 
 
