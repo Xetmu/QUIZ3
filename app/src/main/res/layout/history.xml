@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@color/purle">
+
+    <ScrollView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="История"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="33dp"
+        ></TextView>
+
+
+
+    <LinearLayout
+
+        android:id="@+id/no_history"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/shape"
+        android:gravity="center"
+
+        android:orientation="vertical">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Вы ещё не проходили ни одной викторины"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="16dp" />
+        <Button
+            android:textStyle="bold"
+            android:id="@+id/load_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:backgroundTint="@color/back"
+            android:elevation="4dp"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="16dp"
+            android:text="Начать викторину"
+            android:textSize="20sp"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:id="@+id/history_container"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>

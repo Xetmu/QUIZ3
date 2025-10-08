@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="yellow">#FFB800</color>
+    <color name="purle">#7067FF</color>
+    <color name="back">#7066FF</color>
+    <color name="button_bg">#F3F3F3</color>
+    <color name="next">#BABABA</color>
+    <color name="border">#2B0063</color>
+    <color name="count">#BCB7FF</color>
+    <color name="wrong">#E70000</color>
+    <color name="right">#00AE3A</color>
+</resources>
