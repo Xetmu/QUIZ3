@@ -83,7 +83,7 @@ public class QuestionAnswer {
         JSONArray savedTimes = getJSONArray(prefs, "saveTimes");
 
         // Обновляем amount
-        amount = savedAmount + 1; // например, увеличиваем количество сохранений
+        amount = savedAmount + 5; // например, увеличиваем количество сохранений
         editor.putInt("amount", amount);
 
         // Обновляем список вопросов
@@ -173,7 +173,7 @@ public class QuestionAnswer {
                 extraNumbers[i] = extraArray.getInt(i);
             }
 
-            // ✅ Загружаем даты и время
+            // Загружаем даты и время
             JSONArray dateArray = new JSONArray(prefs.getString("saveDates", "[]"));
             saveDates = new String[dateArray.length()];
             for (int i = 0; i < dateArray.length(); i++) {
@@ -196,7 +196,6 @@ public class QuestionAnswer {
         prefs.edit().clear().apply();
     }
 
-
     private static JSONArray getJSONArray(SharedPreferences prefs, String key) {
         try {
             return new JSONArray(prefs.getString(key, "[]"));
@@ -206,4 +205,126 @@ public class QuestionAnswer {
         }
     }
 
+
+    /**
+     * Удаляет блок из 5 элементов начиная с указанного индекса из всех массивов в SharedPreferences
+     */
+    public static void removeBlockFromPreferences(Context context, int startIndex) {
+        SharedPreferences prefs = context.getSharedPreferences("quiz_data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        JSONArray savedQuestions = getJSONArray(prefs, "questions");
+        JSONArray savedCorrectAnswers = getJSONArray(prefs, "correctAnswers");
+        JSONArray savedChoices = getJSONArray(prefs, "choices");
+        JSONArray savedNumberArray = getJSONArray(prefs, "numbers");
+        JSONArray savedExtraArray = getJSONArray(prefs, "extraNumbers");
+        JSONArray savedDates = getJSONArray(prefs, "saveDates");
+        JSONArray savedTimes = getJSONArray(prefs, "saveTimes");
+
+        int blockSize = 5;
+
+        if (startIndex < 0 || startIndex >= savedQuestions.length()) {
+            // Некорректный индекс — ничего не делаем
+            return;
+        }
+
+
+
+        // Удаляем блок из простых массивов
+        savedQuestions = removeBlock(savedQuestions, startIndex);
+        savedCorrectAnswers = removeBlock(savedCorrectAnswers, startIndex);
+        savedNumberArray = removeBlock(savedNumberArray, startIndex);
+        savedExtraArray = removeBlock(savedExtraArray, startIndex);
+        savedDates = removeBlock(savedDates, startIndex);
+        savedTimes = removeBlock(savedTimes, startIndex);
+
+        // Удаляем блок из массива choices (вложенные JSONArray)
+        JSONArray newChoices = new JSONArray();
+        for (int i = 0; i < savedChoices.length(); i++) {
+            if (i < startIndex || i >= startIndex + blockSize) {
+                try {
+                    newChoices.put(savedChoices.get(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        savedChoices = newChoices;
+
+        // Сохраняем обратно
+        editor.putString("questions", savedQuestions.toString());
+        editor.putString("correctAnswers", savedCorrectAnswers.toString());
+        editor.putString("choices", savedChoices.toString());
+        editor.putString("numbers", savedNumberArray.toString());
+        editor.putString("extraNumbers", savedExtraArray.toString());
+        editor.putString("saveDates", savedDates.toString());
+        editor.putString("saveTimes", savedTimes.toString());
+
+        // Обновляем amount
+        int newAmount = prefs.getInt("amount", 0) - blockSize;
+        if (newAmount < 0) newAmount = 0;
+        editor.putInt("amount", newAmount);
+
+        editor.apply();
+
+        // Обновляем статические переменные из новых данных
+        amount = newAmount;
+
+        // Обновляем локальные массивы в классе
+        try {
+            question = new String[savedQuestions.length()];
+            for (int i = 0; i < savedQuestions.length(); i++) {
+                question[i] = savedQuestions.getString(i);
+            }
+
+            correctAnswers = new String[savedCorrectAnswers.length()];
+            for (int i = 0; i < savedCorrectAnswers.length(); i++) {
+                correctAnswers[i] = savedCorrectAnswers.getString(i);
+            }
+
+            choices = new String[savedChoices.length()][4];
+            for (int i = 0; i < savedChoices.length(); i++) {
+                JSONArray inner = savedChoices.getJSONArray(i);
+                for (int j = 0; j < 4; j++) {
+                    choices[i][j] = inner.getString(j);
+                }
+            }
+
+            numbers = new int[savedNumberArray.length()];
+            for (int i = 0; i < savedNumberArray.length(); i++) {
+                numbers[i] = savedNumberArray.getInt(i);
+            }
+
+            extraNumbers = new int[savedExtraArray.length()];
+            for (int i = 0; i < savedExtraArray.length(); i++) {
+                extraNumbers[i] = savedExtraArray.getInt(i);
+            }
+
+            saveDates = new String[savedDates.length()];
+            for (int i = 0; i < savedDates.length(); i++) {
+                saveDates[i] = savedDates.getString(i);
+            }
+
+            saveTimes = new String[savedTimes.length()];
+            for (int i = 0; i < savedTimes.length(); i++) {
+                saveTimes[i] = savedTimes.getString(i);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    private static JSONArray removeBlock(JSONArray array, int startIndex) {
+        int blockSize = 5;
+        JSONArray result = new JSONArray();
+        for (int i = 0; i < array.length(); i++) {
+            if (i < startIndex || i >= startIndex + blockSize) {
+                try {
+                    result.put(array.get(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
 }

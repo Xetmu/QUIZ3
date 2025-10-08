@@ -11,13 +11,18 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -87,7 +92,6 @@ public class HistoryLayoutBuilder {
                 star.setLayoutParams(starParams);
                 if (count_star>j-i*5) {
                     star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.active));
-                    count_star--;
                 } else {
                     star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.inactive));
                 }
@@ -156,6 +160,36 @@ public class HistoryLayoutBuilder {
 
                 activity.startActivity(intent);
             });
+                parentLayout.setOnLongClickListener(v -> {
+                    PopupMenu popup = new PopupMenu(activity, v, Gravity.END);
+                    popup.getMenuInflater().inflate(R.menu.my_context_menu, popup.getMenu());
+
+
+
+
+
+
+                    popup.setOnMenuItemClickListener(item -> {
+                        Menu menu = popup.getMenu();
+                        menu.setHeaderIcon(R.drawable.trash_icon);
+                        item.setIcon(R.drawable.trash_icon);
+                        if (item.getItemId() == R.id.delete) {
+                            // Обработка удаления
+                            return true;
+                        }
+                        return false;
+                    });
+
+                    popup.show();
+
+
+                    return true;
+            });
+
+
+
+
+
 
             // === Добавляем layout в основной контейнер ===
             container.addView(parentLayout);
@@ -169,6 +203,7 @@ public class HistoryLayoutBuilder {
                 context.getResources().getDisplayMetrics()
         );
     }
+
 
     private static Drawable getSelectableItemBackground(Context context) {
         TypedValue typedValue = new TypedValue();

@@ -18,10 +18,6 @@ import org.json.JSONException;
 public class QuizLoader {
 
     private static final String url = "https://opentdb.com/api.php?amount=5&type=multiple&category=9&difficulty=easy";
-
-    /**
-     * Минимальный вызов — просто загружаем и запускаем BoardQuizActivity
-     */
     public static void loadQuiz(Context context) {
         http_render.sendRequest(context, url, new http_render.ResponseCallback() {
             @Override
@@ -39,10 +35,6 @@ public class QuizLoader {
             }
         });
     }
-
-    /**
-     * Расширенный вызов — с отображением прогресса и фона
-     */
     public static void loadQuiz(Context context,
                                 View progressBar,
                                 View loadButton,

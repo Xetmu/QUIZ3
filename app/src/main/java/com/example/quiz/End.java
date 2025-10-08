@@ -42,7 +42,7 @@ public class End extends AppCompatActivity implements View.OnClickListener{
         int total = 0;
         Index =  QuestionAnswer.index;
 
-        for (int i = 0; i < QuestionAnswer.index; i++) {
+        for (int i = 0; i < QuestionAnswer.index + 5; i++) {
             if (QuestionAnswer.numbers[i + Index] == QuestionAnswer.extraNumbers[i + Index]) {
 
 
@@ -112,7 +112,7 @@ public class End extends AppCompatActivity implements View.OnClickListener{
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
 
-        totalQuestionsTV.setText(" Вопрос " + index%5 + " из 5");
+        totalQuestionsTV.setText(" Вопрос " + index%6 + " из 5");
         totalQuestionsTV.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         totalQuestionsTV.setTextColor(getColor(R.color.count));
         totalQuestionsTV.setId(View.generateViewId()); // Можно для уникальности

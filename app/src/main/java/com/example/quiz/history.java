@@ -8,6 +8,8 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -42,7 +44,25 @@ public class history extends AppCompatActivity implements View.OnClickListener{
 
 
     }
+/*
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId() == R.id.my_button) {
+            getMenuInflater().inflate(R.menu.my_context_menu, menu);
+        }
+    }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete:
+                // Обработка пункта 1
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }*/
 
 
 

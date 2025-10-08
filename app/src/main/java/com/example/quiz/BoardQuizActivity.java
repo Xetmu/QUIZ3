@@ -288,7 +288,7 @@ public class BoardQuizActivity extends AppCompatActivity implements View.OnClick
                 .show();*/
 
 
-        QuestionAnswer.index = QuestionAnswer.question.length-5;
+
         restartQuiz();
 
 
@@ -297,6 +297,7 @@ public class BoardQuizActivity extends AppCompatActivity implements View.OnClick
     void restartQuiz(){
 
         QuestionAnswer.saveToPreferences(App.getContext(), numbers, extranumbers, score);
+        QuestionAnswer.index = QuestionAnswer.question.length-5;
         //QuestionAnswer.clearPreferences(App.getContext());
         Intent intent = new Intent(BoardQuizActivity.this, End.class);
         intent.putExtra("caller", "BoardQuizActivity");
