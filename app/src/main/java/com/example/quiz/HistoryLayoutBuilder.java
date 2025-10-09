@@ -1,9 +1,11 @@
 package com.example.quiz;
 
+import static android.content.Intent.getIntent;
 import static androidx.core.content.ContextCompat.startActivity;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import static com.example.quiz.App.getContext;
+import static com.example.quiz.QuestionAnswer.removeBlockFromPreferences;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +16,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -160,21 +163,27 @@ public class HistoryLayoutBuilder {
 
                 activity.startActivity(intent);
             });
+
+
                 parentLayout.setOnLongClickListener(v -> {
                     PopupMenu popup = new PopupMenu(activity, v, Gravity.END);
                     popup.getMenuInflater().inflate(R.menu.my_context_menu, popup.getMenu());
 
-
-
-
-
-
                     popup.setOnMenuItemClickListener(item -> {
-                        Menu menu = popup.getMenu();
-                        menu.setHeaderIcon(R.drawable.trash_icon);
                         item.setIcon(R.drawable.trash_icon);
                         if (item.getItemId() == R.id.delete) {
                             // Обработка удаления
+                            removeBlockFromPreferences(activity, finalI*5);
+                            ViewGroup parent = (ViewGroup) v.getParent(); // v — это parentLayout
+
+                            if (parent != null) {
+                                parent.removeView(v);
+                            }
+
+
+
+
+
                             return true;
                         }
                         return false;

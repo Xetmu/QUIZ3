@@ -1,6 +1,8 @@
 package com.example.quiz;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -231,12 +233,12 @@ public class QuestionAnswer {
 
 
         // Удаляем блок из простых массивов
-        savedQuestions = removeBlock(savedQuestions, startIndex);
-        savedCorrectAnswers = removeBlock(savedCorrectAnswers, startIndex);
-        savedNumberArray = removeBlock(savedNumberArray, startIndex);
-        savedExtraArray = removeBlock(savedExtraArray, startIndex);
-        savedDates = removeBlock(savedDates, startIndex);
-        savedTimes = removeBlock(savedTimes, startIndex);
+        savedQuestions = removeBlock(savedQuestions, startIndex, 5);
+        savedCorrectAnswers = removeBlock(savedCorrectAnswers, startIndex, 5);
+        savedNumberArray = removeBlock(savedNumberArray, startIndex, 5);
+        savedExtraArray = removeBlock(savedExtraArray, startIndex, 5);
+        savedDates = removeBlock(savedDates, startIndex, 1);
+        savedTimes = removeBlock(savedTimes, startIndex, 1);
 
         // Удаляем блок из массива choices (вложенные JSONArray)
         JSONArray newChoices = new JSONArray();
@@ -312,9 +314,28 @@ public class QuestionAnswer {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+
+
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            Intent intent = new Intent(activity, history.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            activity. finish();
+            activity.overridePendingTransition(0, 0);
+            activity.startActivity(intent);
+            activity.overridePendingTransition(0, 0);
+            // используем activity
+        } else {
+            // обработать ситуацию, если это не Activity (например, вывести ошибку)
+        }
+
+
+
     }
-    private static JSONArray removeBlock(JSONArray array, int startIndex) {
-        int blockSize = 5;
+    private static JSONArray removeBlock(JSONArray array, int startIndex, int count) {
+        int blockSize = count;
         JSONArray result = new JSONArray();
         for (int i = 0; i < array.length(); i++) {
             if (i < startIndex || i >= startIndex + blockSize) {
